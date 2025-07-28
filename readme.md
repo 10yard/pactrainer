@@ -11,7 +11,7 @@ On the left of the screen you will see the current level (e.g. "L. 001"),  the c
 pattern (e.g. "P. 1/3"), and the current status (e.g. S. ACE).  The status will change 
 if you start falling behind to "OK" and finally "BAD" based on the number of dropped 
 movements/frames.  It is still possible to complete the board with a "BAD" status but 
-following the path will not guarantee success and you should be more cautious.  
+following the now "red" path will not guarantee success and you should be more cautious.  
 If you die then the pattern will automatically fail and you will see a blinking "FAIL" 
 message.  You are on your own to complete the board.
 
