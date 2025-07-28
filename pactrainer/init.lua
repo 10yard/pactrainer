@@ -4,7 +4,8 @@
 --The Pac-Man Trainer is an aid to learning the common patterns for completing boards.  
 --You follow an on-screen path through each board.  For the pattern to hold,  you must
 --stay on track and turn the corners quickly.  
---The HUD shows you some information which can help you on your way during gameplay.  
+--
+--The HUD shows information which can help during gameplay.  
 --On the left of the screen you will see the current level (e.g. "L. 001"),  the current
 --pattern (e.g. "P. 1/3"), and the current status (e.g. S. ACE).  The status will change 
 --if you start falling behind to "OK" and finally "BAD" based on the number of dropped 
