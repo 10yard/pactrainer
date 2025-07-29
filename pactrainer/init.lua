@@ -60,8 +60,8 @@ function pactrainer.startplugin()
 	local mode, level, patid, patgroup, maxgroup, state, pills, oldstate, folder
 	local seq, switch = 0, 0
 	local pattern, group = {}, {}
-	local loaded, valid, first, failed, adjusted, lagging, ignore = false, false, false, false, false, false, false
-	local YELLOW, RED = 0xff00ff00, 0xffff0000
+	local loaded, valid, first, failed, adjusted, lagging, ignore, freestyle = false, false, false, false, false, false, false, false
+	local GREEN, YELLOW, RED = 0xff00ff00, 0xffffff00, 0xffff0000
 	local LAG_PIXELS = 5
 		
 		
@@ -98,6 +98,7 @@ function pactrainer.startplugin()
 		-- If a pattern is not found then the previous level patterns is used.  This allows patterns to be grouped.
 		-- Typically there will only be a few patterns like 1,2,3,4 are similar,  5-20 are all the same,  21+ are all the same		
 		pattern = {}
+		group = {}
 		for l=1, 256 do
 			for g=1, 21 do
 				file = io.open("plugins/pactrainer/patterns/"..folder.."/"..tostring(l).."_"..tostring(g)..".dat", "r")
@@ -148,7 +149,7 @@ function pactrainer.startplugin()
 	
 	function reset()
 		seq = 0
-		failed, lagging, ignore = false, false, false
+		failed, lagging, ignore, freestyle = false, false, false, false
 	end
 
 	function write_bytes(address, b1, b2, b3, b4, b5)
@@ -205,7 +206,10 @@ function pactrainer.startplugin()
 				end
 			end
 			-- failed info (flash on fail)
-			if failed then
+			if freestyle then
+				write_bytes(0x40cc, 0x53, 0x25, 0x46, 0x3a, 0x53)
+				write_bytes(0x40b2, 0x46, 0x52, 0x45, 0x45)
+			elseif failed then
 				if scr:frame_number() % 40 < 20 then
 					write_bytes(0x40b2, 0x46, 0x41, 0x49, 0x4c)
 				else
@@ -237,7 +241,6 @@ function pactrainer.startplugin()
 				pattern_toggle()	
 									
 				if mode == 3 then
-					
 					patid, patgroup = group[level][1], group[level][2]
 					
 					if (state == 3 and oldstate ~= 3) or state == 36 then
@@ -263,55 +266,69 @@ function pactrainer.startplugin()
 						--print(pacy, pacx)
 						--------------------
 						
-						-- Ignore lagging when pacman turns back on himself.  Look for ------ and +++++++ in data.
-						if data == "------" then
-							ignore = true
-							data = nil
-						elseif data == "++++++" then
-							ignore = false
-							data = nil
-						end
+						if not (state > 12 and state < 36) then
+						
+							-- Ignore lagging when pacman turns back on himself.  Look for ------ and +++++++ in data.
+							if data == "------" then
+								ignore = true
+								data = nil
+							elseif data == "++++++" then
+								ignore = false
+								data = nil
+							end
+							
+							-- For partial patterns, turn the path yellow to indicate you should freestyle to complete the board						
+							if data == "######" then
+								freestyle = true
+								data = nil
+							end
 
-						for _f = seq + 80, seq, -1 do
-							local data = pattern[(patid * 100000) + _f]																					
-							if data then
-								paty, patx = tonumber(string.sub(data, 1, 3)), tonumber(string.sub(data, 4, 6))
-								if paty and patx then
-									if (seq - _f) % 5 == 0 then
-										-- only draw every 5th line segment
-										local _color = YELLOW
-										if lagging then _color = RED end
-										scr:draw_box(paty+15, patx-15, paty+16, patx-16, _color, _color)
-										if first then
-											scr:draw_box(paty+14, patx-14, paty+17, patx-17, _color, _color)
-											first = false
-										end						
-									end
-									if not ignore and state == 3 and patx == pacx and paty == pacy and _f - seq > 0 then
-										-- Pacman has speeded ahead of pattern (by eating a ghost).  Make an adjustment.
-										seq = seq + (_f - seq)
-										adjusted = true
+							for _f = seq + 80, seq, -1 do
+								local data = pattern[(patid * 100000) + _f]																					
+								if data then
+									paty, patx = tonumber(string.sub(data, 1, 3)), tonumber(string.sub(data, 4, 6))
+									if paty and patx then
+										if (seq - _f) % 5 == 0 then
+											-- draw every 5th line segment
+											
+											local _color = GREEN
+											if freestyle then 
+												_color = YELLOW 
+											elseif lagging then 
+												_color = RED 
+											end										
+											scr:draw_box(paty+15, patx-15, paty+16, patx-16, _color, _color)
+											if first then
+												scr:draw_box(paty+14, patx-14, paty+17, patx-17, _color, _color)
+												first = false
+											end						
+										end
+										if not ignore and state == 3 and patx == pacx and paty == pacy and _f - seq > 0 then
+											-- Pacman has speeded ahead of pattern (by eating a ghost).  Make an adjustment.
+											seq = seq + (_f - seq)
+											adjusted = true
+										end
 									end
 								end
 							end
-						end
 						
-						if state == 3 and (pacx ~= oldpacx or pacy ~= oldpacy) then
-							seq = seq + 1
-						end
+							if state == 3 and (pacx ~= oldpacx or pacy ~= oldpacy) then
+								seq = seq + 1
+							end
 						
-						if paty and patx then
-							if state == 3 and not adjusted and not ignore then
-								-- Are we behind the pattern?
-								lagx = math.abs(patx - pacx)
-								lagy = math.abs(paty - pacy)
-								if (lagx >= LAG_PIXELS and lagx < 100) or lagy >= LAG_PIXELS then
-									lagging = true
+							if paty and patx then
+								if state == 3 and not adjusted and not ignore then
+									-- Are we behind the pattern?
+									lagx = math.abs(patx - pacx)
+									lagy = math.abs(paty - pacy)
+									if (lagx >= LAG_PIXELS and lagx < 100) or lagy >= LAG_PIXELS then
+										lagging = true
+									end
 								end
 							end
-						end
 						
-						oldpacx, oldpacy = pacx, pacy
+							oldpacx, oldpacy = pacx, pacy
+						end
 					end
 		
 					display_status()
