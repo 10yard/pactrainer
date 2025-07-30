@@ -46,6 +46,19 @@ More information about Killerclown's patterns is to be found at:
     https://www.mameworld.info/net/pacman/patterns.html
 
 
+### Perfect NRC set:
+    * Currently In development - Stage 1 is available
+
+    An advanced pattern set for attaining the Perfect Pacman score by NR Chapman
+    There are 22 patterns in total.
+    Boards 1-20 each have a unique pattern
+    Boards 21-255 have a single pattern
+    The split screen board 255 has a pattern
+
+    Archive web information can be found at
+    https://web.archive.org/web/20061103090947/http://nrchapman.com/pacman/
+
+
 ## Minimum start up arguments:
 
 ```mame pacman -plugin pactrainer```
@@ -79,6 +92,14 @@ Pacstrats for his excellent 3 pattern video at
 
 Killerclown for his Pac-Man patterns and strategy guide at:
 - https://www.mameworld.info/net/pacman/patterns.html
+
+NR Chapman for his perfect Pac-Man guide at:
+- https://web.archive.org/web/20061103090947/http://nrchapman.com/pacman/
+
+
+## What's next
+
+- Finish work on the perfect Pac-Man pattern set
 
 
 ## Feedback

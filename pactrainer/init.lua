@@ -16,7 +16,7 @@
 --
 --Press P2 button to toggle between the currently available pattern sets.
 --    
---Pacstrats set:
+--PACSTRATS set:
 --    Use only three patterns to clear boards 1 through 255 and get to the kill screen!
 --    Pattern 1 is used on boards 1 through 4
 --    Pattern 2 is used on boards 5 through 20
@@ -26,7 +26,7 @@
 --	  More information about following these patterns in the video at:
 --	  https://www.youtube.com/watch?v=wKQy8LTTzC4
 --    
---Killerclown set:
+--KILLERCLOWN set:
 --    Uses 5 patterns but some of them are very similar so should be easier to learn.
 --    These patterns are robust until near the end of each board.  You may then need to 
 --    freestyle to tidy up the few remaining pellets on your own. 
@@ -39,6 +39,18 @@
 --	  More information about Killerclown's patterns is to be found at
 --    https://www.mameworld.info/net/pacman/patterns.html
 --
+--PERFECT_NRC set:
+--    In development - Stage 1 is available
+--
+--    An advanced pattern set for attaining the Perfect Pacman score by NR Chapman
+--    There are 22 patterns in total:
+--    Boards 1-20 each have a pattern
+--    Boards 21-255 have a single pattern
+--    The split screen board 255 has a pattern
+--
+--    The archive web information can be found at
+--    https://web.archive.org/web/20061103090947/http://nrchapman.com/pacman/
+--
 --Minimum start up arguments:
 --    mame pacman -plugin pactrainer
 --
@@ -47,7 +59,7 @@
 -----------------------------------------------------------------------------------------
 local exports = {
 	name = "pactrainer",
-	version = "0.1",
+	version = "0.1b",
 	description = "Pac-Man Pattern Trainer",
 	license = "GNU GPLv3",
 	author = { name = "Jon Wilson (10yard)" } }
@@ -60,11 +72,24 @@ function pactrainer.startplugin()
 	local mode, level, patid, patgroup, maxgroup, state, pills, oldstate, folder
 	local seq, switch = 0, 0
 	local pattern, group = {}, {}
-	local loaded, valid, first, failed, adjusted, lagging, ignore, freestyle = false, false, false, false, false, false, false, false
+	local loaded, valid, first, failed, adjusted, lagging, ignore, freestyle, perfect = false, false, false, false, false, false, false, false, false
 	local GREEN, YELLOW, RED = 0xff00ff00, 0xffffff00, 0xffff0000
-	local LAG_PIXELS = 5
-		
-		
+	local LAG_PIXELS = 5		
+	local sets = {"pacstrats", "killerclown", "perfect_nrc"}
+	
+	
+	function get_next(table, id)
+		local found = false
+		for k, v in ipairs(table) do
+			if found then
+				nextid = v
+				break
+			end
+			if v == id then found = true end
+		end		
+		return nextid or "pacstrats"
+	end
+	
 	function pactrainer_initialize()
 		mac = manager.machine
 		if mac then
@@ -81,7 +106,7 @@ function pactrainer.startplugin()
 	function pactrainer_patterns()
 		local content, file, prev_line
 				
-		-- look for the active pattern folder or use the default - pacstrats
+		-- look for the active pattern folder
 		if not folder then
 			file = io.open("plugins/pactrainer/patterns/active.dat", "r")
 			if file then
@@ -92,7 +117,7 @@ function pactrainer.startplugin()
 				file:close()
 			end
 		end
-		if not folder then folder = "pacstrats" end
+		if not folder then folder = get_next(sets) end
 														
 		-- Each level can have a pattern but we want as few patterns as possible to help with learning
 		-- If a pattern is not found then the previous level patterns is used.  This allows patterns to be grouped.
@@ -124,6 +149,7 @@ function pactrainer.startplugin()
 				group[l] = group[l - 1]  -- use previous pattern for this level
 			end
 		end
+		perfect = string.find(folder, "perfect") ~= nil
 		loaded = true				
 	end
 	
@@ -134,16 +160,19 @@ function pactrainer.startplugin()
 		end
 		
 		if scr:frame_number() > switch + 30 and string.sub(integer_to_binary(mem:read_u8(0x5040)), 2, 2) == "0" then
-			if folder == "pacstrats" then
-				folder = "killerclown"
-			else
-				folder = "pacstrats"
-			end
+			folder = get_next(sets, folder)
 			pactrainer_patterns()
 			if not(mode == 1 and state == 0) then
 				mac:popmessage("Switched to '"..string.upper(folder).."' patterns.  Active from next level start.")
 			end
 			switch = scr:frame_number()
+			
+			-- save as default
+			file = io.open("plugins/pactrainer/patterns/active.dat", "w")
+			if file then
+				file:write(folder)
+				file:close()
+			end
 		end
 	end
 	
@@ -266,6 +295,12 @@ function pactrainer.startplugin()
 						--print(pacy, pacx)
 						--------------------
 						
+						-- Perfect pattern folders should include the term perfect
+						-- We won't adjust the path as all ghosts are intended to be eaten
+						if perfect then
+							ignore = true
+						end						
+						
 						if not (state > 12 and state < 36) then
 						
 							-- Ignore lagging when pacman turns back on himself.  Look for ------ and +++++++ in data.
@@ -316,8 +351,8 @@ function pactrainer.startplugin()
 								seq = seq + 1
 							end
 						
-							if paty and patx then
-								if state == 3 and not adjusted and not ignore then
+							if state == 3 and paty and patx then
+								if state == 3 and (not adjusted and not ignore) or perfect then
 									-- Are we behind the pattern?
 									lagx = math.abs(patx - pacx)
 									lagy = math.abs(paty - pacy)
@@ -340,22 +375,22 @@ function pactrainer.startplugin()
 		end
 	end
 
-	function pactrainer_stop()
-		if not folder then folder = "pacstrats" end
-		file = io.open("plugins/pactrainer/patterns/active.dat", "w")
-		if file then
-			file:write(folder)
-			file:close()
-		end
-	end
+	--function pactrainer_stop()
+	--	if not folder then folder = get_next(sets) end
+	--	file = io.open("plugins/pactrainer/patterns/active.dat", "w")
+	--	if file then
+	--		file:write(folder)
+	--		file:close()
+	--	end
+	--end
 
 	if emu.app_version() >= "0.256" then	
 		pactrainer_postload = emu.add_machine_post_load_notifier(reset)
 		pactrainer_initialize = emu.add_machine_reset_notifier(pactrainer_initialize)
-		pactrainer_stop = emu.add_machine_stop_notifier(pactrainer_stop)
+		--pactrainer_stop = emu.add_machine_stop_notifier(pactrainer_stop)
 	else
 		emu.register_start(function() reset() end)
-		emu.register_stop(function() pactrainer_stop() end)
+		--emu.register_stop(function() pactrainer_stop() end)
 		emu.register_prestart(function() pactrainer_initialize() end)		
 	end
 		
