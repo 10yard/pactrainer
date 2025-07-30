@@ -59,6 +59,9 @@ More information about Killerclown's patterns is to be found at:
     https://web.archive.org/web/20061103090947/http://nrchapman.com/pacman/
 
 
+![Perfect Pac-Man Pattern Demo](demo2.gif)
+
+
 ## Minimum start up arguments:
 
 ```mame pacman -plugin pactrainer```
