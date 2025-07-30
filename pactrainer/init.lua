@@ -69,13 +69,14 @@ local pactrainer = exports
 function pactrainer.startplugin()
 	local mac, cpu, mem, scr
 	local patx, paty, pacx, pacy, oldpacx, oldpacy, lagx, lagy
-	local mode, level, patid, patgroup, maxgroup, state, pills, oldstate, folder
+	local mode, level, patid, patgroup, maxgroup, state, pills, oldstate, folder, lag_pixels
 	local seq, switch = 0, 0
 	local pattern, group = {}, {}
 	local loaded, valid, first, failed, adjusted, lagging, ignore, freestyle, perfect = false, false, false, false, false, false, false, false, false
-	local GREEN, YELLOW, RED = 0xff00ff00, 0xffffff00, 0xffff0000
-	local LAG_PIXELS = 5		
-	local sets = {"pacstrats", "killerclown", "perfect_nrc"}
+	local GREEN, YELLOW, RED = 0xff00ff00, 0xffffff00, 0xffff0000	
+	local SETS = {"pacstrats", "killerclown", "perfect_nrc"}
+	local LAG_PIXELS_DEFAULT = 5	
+	local lag_pixels = LAG_PIXELS_DEFAULT
 	
 	
 	function get_next(table, id)
@@ -117,7 +118,7 @@ function pactrainer.startplugin()
 				file:close()
 			end
 		end
-		if not folder then folder = get_next(sets) end
+		if not folder then folder = get_next(SETS) end
 														
 		-- Each level can have a pattern but we want as few patterns as possible to help with learning
 		-- If a pattern is not found then the previous level patterns is used.  This allows patterns to be grouped.
@@ -150,6 +151,7 @@ function pactrainer.startplugin()
 			end
 		end
 		perfect = string.find(folder, "perfect") ~= nil
+		lag_pixels = LAG_PIXELS_DEFAULT + (perfect and 1 or 0)
 		loaded = true				
 	end
 	
@@ -160,7 +162,7 @@ function pactrainer.startplugin()
 		end
 		
 		if scr:frame_number() > switch + 30 and string.sub(integer_to_binary(mem:read_u8(0x5040)), 2, 2) == "0" then
-			folder = get_next(sets, folder)
+			folder = get_next(SETS, folder)
 			pactrainer_patterns()
 			if not(mode == 1 and state == 0) then
 				mac:popmessage("Switched to '"..string.upper(folder).."' patterns.  Active from next level start.")
@@ -303,21 +305,24 @@ function pactrainer.startplugin()
 						
 						if not (state > 12 and state < 36) then
 						
-							-- Ignore lagging when pacman turns back on himself.  Look for ------ and +++++++ in data.
 							if data == "------" then
+								-- Ignore lagging behind when turning back on self
 								ignore = true
 								data = nil
 							elseif data == "++++++" then
+								-- Reactivate lagging
 								ignore = false
+								data = nil
+							elseif data == "######" then
+								-- For partial patterns, turn the path yellow to indicate freestyle to complete the board													
+								freestyle = true
+								data = nil
+							elseif data and #data > 6 and string.sub(data, 1, 6) == "REMARK" then
+								-- Display an instruction to assist at current pattern position
+								mac:popmessage(string.sub(data, 8, #data))
 								data = nil
 							end
 							
-							-- For partial patterns, turn the path yellow to indicate you should freestyle to complete the board						
-							if data == "######" then
-								freestyle = true
-								data = nil
-							end
-
 							for _f = seq + 80, seq, -1 do
 								local data = pattern[(patid * 100000) + _f]																					
 								if data then
@@ -352,11 +357,11 @@ function pactrainer.startplugin()
 							end
 						
 							if state == 3 and paty and patx then
-								if state == 3 and (not adjusted and not ignore) or perfect then
+								if state == 3 and (not adjusted and not ignore) or perfect then									
 									-- Are we behind the pattern?
 									lagx = math.abs(patx - pacx)
 									lagy = math.abs(paty - pacy)
-									if (lagx >= LAG_PIXELS and lagx < 100) or lagy >= LAG_PIXELS then
+									if (lagx >= lag_pixels and lagx < 100) or lagy >= lag_pixels then
 										lagging = true
 									end
 								end
@@ -375,22 +380,11 @@ function pactrainer.startplugin()
 		end
 	end
 
-	--function pactrainer_stop()
-	--	if not folder then folder = get_next(sets) end
-	--	file = io.open("plugins/pactrainer/patterns/active.dat", "w")
-	--	if file then
-	--		file:write(folder)
-	--		file:close()
-	--	end
-	--end
-
 	if emu.app_version() >= "0.256" then	
 		pactrainer_postload = emu.add_machine_post_load_notifier(reset)
 		pactrainer_initialize = emu.add_machine_reset_notifier(pactrainer_initialize)
-		--pactrainer_stop = emu.add_machine_stop_notifier(pactrainer_stop)
 	else
 		emu.register_start(function() reset() end)
-		--emu.register_stop(function() pactrainer_stop() end)
 		emu.register_prestart(function() pactrainer_initialize() end)		
 	end
 		
