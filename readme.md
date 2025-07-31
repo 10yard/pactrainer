@@ -8,7 +8,7 @@ stay on track and turn the corners quickly.
 
 The HUD shows information which can help during gameplay.  
 On the left of the screen you will see the current level (e.g. "L. 001"),  the current
-pattern (e.g. "P. 1/3"), and the current status (e.g. S. ACE).  The status will change 
+pattern (e.g. "P. 02"), and the current status (e.g. S. ACE).  The status will change 
 if you start falling behind from "ACE" to "OK" and finally "BAD" based on the number of
 dropped movements/frames.  It is still possible to complete the board with a "BAD" 
 status but following the now "red" path will not guarantee success and you should be 
@@ -23,9 +23,9 @@ Press P2 button to toggle between the currently available pattern sets.
     
 ### Pacstrats pattern set:
     Use only three patterns to clear boards 1 through 255 and get to the kill screen!
-    Pattern 1 is used on boards 1 through 4
-    Pattern 2 is used on boards 5 through 20
-    Pattern 3 is used on boards 21 through 255
+    Pattern 01 is used on boards 1 through 4
+    Pattern 02 is used on boards 5 through 20
+    Pattern 03 is used on boards 21 through 255
     All three patterns clear the entire board and get both prizes.
 
 More information Pacstrats patterns in the video at:
@@ -36,24 +36,35 @@ More information Pacstrats patterns in the video at:
     Uses 5 patterns but some of them are very similar so should be easier to learn.
     These patterns are robust until near the end of each board.  You may then need to 
     freestyle to tidy up the few remaining pellets on your own. 
-    Pattern 1 is for board 1 only.  It's freestyle near the end if you prefer.
-    Pattern 2 is for boards 2 through 4.  It's a slight variation from pattern 1.
-    Pattern 3 if for boards 5 through 16.
-    Pattern 4 is for boards 17, 19 and 20.  You may need to freestyle near the end.
-    Pattern 5 is for boards 21 through 255
+    Pattern 01 is for board 1 only.  It's freestyle near the end if you prefer.
+    Pattern 02 is for boards 2 through 4.  It's a slight variation from pattern 1.
+    Pattern 03 if for boards 5 through 16 and 18.
+    Pattern 04 is for boards 17, 19 and 20.  You may need to freestyle near the end.
+    Pattern 05 is for boards 21 through 255
 
 More information about Killerclown's patterns is to be found at:
     https://www.mameworld.info/net/pacman/patterns.html
 
 
 ### Perfect NRC set:
-    * Currently In development - Stage 1,2 and 3 are available
+    * Currently In development - Stages 1 to 5 are currently available
 
     An advanced pattern set for attaining the Perfect Pacman score by NR Chapman
-    There are 22 patterns in total.
-    Boards 1-20 each have a unique pattern
-    Boards 21-255 have a single pattern
-    The split screen board 255 has a pattern
+    There are 13 different patterns.
+	
+	Pattern 01 is for board 1 only.
+	Pattern 02 is for board 2 only.
+	Pattern 03 is for board 3 only.
+	Pattern 04 is for board 4 only.
+	Pattern 05 is for boards 5, 7, 8 and 11.
+	Pattern 06 is for board 6 only.
+	Pattern 07 is for board 9, 12, 13, 15, 16 and 18
+	Pattern 08 is for board 10 only
+	Pattern 09 is for board 14 only
+	Pattern 10 is for board 17 only
+	Pattern 11 is for boards 19 and 20
+	Pattern 12 is for boards 21 to 255
+	Pattern 13 is for board 256
 
     Archive web information can be found at
     https://web.archive.org/web/20061103090947/http://nrchapman.com/pacman/

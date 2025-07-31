@@ -41,10 +41,8 @@
 --
 --PERFECT_NRC set:
 --    An advanced pattern set for attaining the Perfect Pacman score by NR Chapman
---    There are 22 patterns in total:
---    Boards 1-20 each have a pattern
---    Boards 21-255 have a single pattern
---    The split screen board 255 has a pattern
+--    There are many patterns.
+--    * Currently In development - Stages 1 to 5 are currently available
 --
 --    The archive web information can be found at
 --    https://web.archive.org/web/20061103090947/http://nrchapman.com/pacman/
@@ -57,7 +55,7 @@
 -----------------------------------------------------------------------------------------
 local exports = {
 	name = "pactrainer",
-	version = "0.1c",
+	version = "0.1e",
 	description = "Pac-Man Pattern Trainer",
 	license = "GNU GPLv3",
 	author = { name = "Jon Wilson (10yard)" } }
@@ -208,13 +206,14 @@ function pactrainer.startplugin()
 			--level info
 			local _sub = string.sub
 			local _lev = string.format("%03d", level)
+			local _grp = string.format("%02d", patgroup)
 			local _s3, s4, s5
 			local _lag
 			
 			--level info
 			write_bytes(0x43ac, 0x4c, 0x25, tonumber(_sub(_lev, 1, 1)) + 0x30, tonumber(_sub(_lev, 2, 2)) + 0x30, tonumber(_sub(_lev, 3, 3)) + 0x30)
 			--pattern info
-			write_bytes(0x43b2, 0x50, 0x25, patgroup + 0x30, 0x3a, maxgroup + 0x30)	
+			write_bytes(0x43b2, 0x50, 0x25, tonumber(_sub(_grp, 1, 1)) + 0x30, tonumber(_sub(_grp, 2, 2)) + 0x30, 0x40)	
 			--status info
 			if mem:read_u8(0x40cc) ~= 0x53 then
 				write_bytes(0x40cc, 0x53, 0x25, 0x41, 0x43, 0x45)
@@ -290,7 +289,7 @@ function pactrainer.startplugin()
 						data = pattern[(patid * 100000) + seq]
 						
 						--Debugging---------
-						--print(data)
+						--print(seq, data)
 						--ignore = true
 						--print(pacy, pacx)
 						--------------------
