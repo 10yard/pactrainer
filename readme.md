@@ -47,7 +47,7 @@ More information about Killerclown's patterns is to be found at:
 
 
 ### Perfect NRC set:
-    * Currently In development - Stage 1 is available
+    * Currently In development - Stage 1,2 and 3 are available
 
     An advanced pattern set for attaining the Perfect Pacman score by NR Chapman
     There are 22 patterns in total.

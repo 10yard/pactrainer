@@ -40,8 +40,6 @@
 --    https://www.mameworld.info/net/pacman/patterns.html
 --
 --PERFECT_NRC set:
---    In development - Stage 1 is available
---
 --    An advanced pattern set for attaining the Perfect Pacman score by NR Chapman
 --    There are 22 patterns in total:
 --    Boards 1-20 each have a pattern
