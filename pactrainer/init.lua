@@ -63,15 +63,16 @@ local exports = {
 local pactrainer = exports
 
 function pactrainer.startplugin()
+	local GREEN, YELLOW, RED = 0xff00ff00, 0xffffff00, 0xffff0000
+	local SETS = {"pacstrats", "killerclown", "perfect_nrc"}
+	local LAG_PIXELS_DEFAULT = 5
+
 	local mac, cpu, mem, scr
 	local patx, paty, pacx, pacy, oldpacx, oldpacy, lagx, lagy
-	local mode, level, patid, patgroup, maxgroup, state, pills, oldstate, folder, lag_pixels
+	local mode, level, patid, patgroup, state, pills, oldstate, folder, first
 	local seq, switch = 0, 0
 	local pattern, group = {}, {}
-	local loaded, valid, first, failed, adjusted, lagging, ignore, freestyle, perfect = false, false, false, false, false, false, false, false, false
-	local GREEN, YELLOW, RED = 0xff00ff00, 0xffffff00, 0xffff0000	
-	local SETS = {"pacstrats", "killerclown", "perfect_nrc"}
-	local LAG_PIXELS_DEFAULT = 5	
+	local loaded, valid, failed, adjusted, lagging, ignore, freestyle, perfect = false, false, false, false, false, false, false, false
 	local lag_pixels = LAG_PIXELS_DEFAULT
 	
 	
@@ -107,14 +108,13 @@ function pactrainer.startplugin()
 		if not folder then
 			file = io.open("plugins/pactrainer/patterns/active.dat", "r")
 			if file then
-				content = file:read("*all")
-				if #content > 2 then
-					folder = content
-				end
+				folder = file:read("*all")
 				file:close()
 			end
 		end
-		if not folder then folder = get_next(SETS) end
+		if not folder or #folder <= 2 then
+			folder = get_next(SETS)
+		end
 														
 		-- Each level can have a pattern but we want as few patterns as possible to help with learning
 		-- If a pattern is not found then the previous level patterns is used.  This allows patterns to be grouped.
@@ -128,8 +128,7 @@ function pactrainer.startplugin()
 					valid = true
 					-- store the starting level and group associated with the level
 					group[l] = {l, g}
-					maxgroup = g
-					
+
 					local _i = 0
 					for line in file:lines() do 
 						if line ~= prev_line then
@@ -197,19 +196,16 @@ function pactrainer.startplugin()
 			ret = tostring(x%2) .. ret
 			x=math.modf(x/2)
 		end
-		ret = tostring(x)..ret
-		return string.format("%08d", ret)
+		return string.format("%08d", tostring(x)..ret)
     end
 	
 	function display_status()
 		if loaded then
-			--level info
 			local _sub = string.sub
 			local _lev = string.format("%03d", level)
 			local _grp = string.format("%02d", patgroup)
-			local _s3, s4, s5
-			local _lag
-			
+			local _lag, _s3, _s4, _s5
+
 			--level info
 			write_bytes(0x43ac, 0x4c, 0x25, tonumber(_sub(_lev, 1, 1)) + 0x30, tonumber(_sub(_lev, 2, 2)) + 0x30, tonumber(_sub(_lev, 3, 3)) + 0x30)
 			--pattern info
@@ -233,7 +229,7 @@ function pactrainer.startplugin()
 					write_bytes(0x40cc, 0x53, 0x25, _s3, _s4, _s5)
 				end
 			end
-			-- failed info (flash on fail)
+			-- freestyle time or failed (flash on fail)
 			if freestyle then
 				write_bytes(0x40cc, 0x53, 0x25, 0x46, 0x3a, 0x53)
 				write_bytes(0x40b2, 0x46, 0x52, 0x45, 0x45)
