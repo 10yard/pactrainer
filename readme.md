@@ -34,12 +34,12 @@ More information Pacstrats patterns in the video at:
     
 ### Killerclown pattern set:
     Uses 5 patterns but some of them are very similar so should be easier to learn.
-    These patterns are robust until near the end of each board.  You may then need to 
-    freestyle to tidy up the few remaining pellets on your own. 
+    These patterns are robust until near the end of each board.  You may need to 
+    freestyle to tidy up some remaining pellets on your own. 
     Pattern 01 is for board 1 only.  It's freestyle near the end if you prefer.
     Pattern 02 is for boards 2 through 4.  It's a slight variation from pattern 1.
     Pattern 03 if for boards 5 through 16 and 18.
-    Pattern 04 is for boards 17, 19 and 20.  You may need to freestyle near the end.
+    Pattern 04 is for boards 17, 19 and 20.  You'll need to freestyle near the end.
     Pattern 05 is for boards 21 through 255
 
 More information about Killerclown's patterns is to be found at:
@@ -47,7 +47,7 @@ More information about Killerclown's patterns is to be found at:
 
 
 ### Perfect NRC set:
-    * Currently In development - Stages 1 to 5 are currently available
+    * Currently In development - Stages 1 to 8 are currently available
 
     An advanced pattern set for attaining the Perfect Pacman score by NR Chapman
     There are 13 different patterns.

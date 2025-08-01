@@ -28,12 +28,12 @@
 --    
 --KILLERCLOWN set:
 --    Uses 5 patterns but some of them are very similar so should be easier to learn.
---    These patterns are robust until near the end of each board.  You may then need to 
---    freestyle to tidy up the few remaining pellets on your own. 
+--    These patterns are robust until near to the end of each board.  You may need to
+--    freestyle to tidy up some remaining pellets on your own.
 --    Pattern 1 is for board 1 only.  It's freestyle near the end if you prefer.
 --    Pattern 2 is for boards 2 through 4.  It's a slight variation from pattern 1.
 --    Pattern 3 if for boards 5 through 16.
---    Pattern 4 is for boards 17, 19 and 20.  You may need to freestyle near the end.
+--    Pattern 4 is for boards 17, 19 and 20.  You'll need to freestyle near the end.
 --    Pattern 5 is for boards 21 through 255
 --	
 --	  More information about Killerclown's patterns is to be found at
@@ -42,7 +42,7 @@
 --PERFECT_NRC set:
 --    An advanced pattern set for attaining the Perfect Pacman score by NR Chapman
 --    There are many patterns.
---    * Currently In development - Stages 1 to 5 are currently available
+--    * Currently In development - Stages 1 to 8 are currently available
 --
 --    The archive web information can be found at
 --    https://web.archive.org/web/20061103090947/http://nrchapman.com/pacman/
@@ -285,7 +285,7 @@ function pactrainer.startplugin()
 						data = pattern[(patid * 100000) + seq]
 						
 						--Debugging---------
-						--print(seq, data)
+						--print(data)
 						--ignore = true
 						--print(pacy, pacx)
 						--------------------
