@@ -47,24 +47,21 @@ More information about Killerclown's patterns is to be found at:
 
 
 ### Perfect NRC set:
-    * Currently In development - Stages 1 to 8 are currently available
+    * Currently In development - Stages 1 to 9 are available.
 
     An advanced pattern set for attaining the Perfect Pacman score by NR Chapman
-    There are 13 different patterns.
+    There are 13 different patterns including the split-screen pattern.
 	
-	Pattern 01 is for board 1 only.
-	Pattern 02 is for board 2 only.
-	Pattern 03 is for board 3 only.
-	Pattern 04 is for board 4 only.
+	Patterns 01, 02, 03 and 04 are for boards 1, 2, 3 and 4 respectively.
 	Pattern 05 is for boards 5, 7, 8 and 11.
 	Pattern 06 is for board 6 only.
-	Pattern 07 is for board 9, 12, 13, 15, 16 and 18
+	Pattern 07 is for board 9, 12, 13, 15, 16 and 18.  Freestyling is necessary near the end.
 	Pattern 08 is for board 10 only
 	Pattern 09 is for board 14 only
 	Pattern 10 is for board 17 only
 	Pattern 11 is for boards 19 and 20
 	Pattern 12 is for boards 21 to 255
-	Pattern 13 is for board 256
+	Pattern 13 is for board 256 (split-screen)
 
     Archive web information can be found at
     https://web.archive.org/web/20061103090947/http://nrchapman.com/pacman/
