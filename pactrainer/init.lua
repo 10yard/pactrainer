@@ -42,7 +42,6 @@
 --PERFECT_NRC set:
 --    An advanced pattern set for attaining the Perfect Pacman score by NR Chapman
 --    There are many patterns.
---    * Currently In development - Stages 1 to 9 are available.
 --
 --    The archive web information can be found at
 --    https://web.archive.org/web/20061103090947/http://nrchapman.com/pacman/
@@ -55,7 +54,7 @@
 -----------------------------------------------------------------------------------------
 local exports = {
 	name = "pactrainer",
-	version = "0.1f",
+	version = "0.1h",
 	description = "Pac-Man Pattern Trainer",
 	license = "GNU GPLv3",
 	author = { name = "Jon Wilson (10yard)" } }
