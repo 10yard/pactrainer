@@ -2,7 +2,10 @@
 
 The Pac-Man Trainer is an aid to learning the common patterns for completing boards.  
 You follow an on-screen path through each board.  For the pattern to hold,  you must
-stay on track and turn the corners quickly.  
+stay on track and turn corners quickly - steering ahead of each turn.
+
+The trainer can help you to reach the 9th Key (at level 21) from which point all of
+the boards play the same until you reach the infamous split-screen at level 256.
 
 ![Pac-Man Trainer Plugin Demo](demo.gif)
 
@@ -58,8 +61,8 @@ More information about Killerclown's patterns is to be found at:
 	Pattern 09 is for board 14 only
 	Pattern 10 is for board 17 only
 	Pattern 11 is for boards 19 and 20
-	Pattern 12 is for boards 21 to 255
-	Pattern 13 is for board 256 (split-screen)
+	Pattern 12 is for boards 21 to 255.  There is a safe spot if you need a rest.
+	Pattern 13 is for board 256 (split-screen).  Freestyling to collect 9 hidden dots on each life.
 
     Archive web information can be found at
     https://web.archive.org/web/20061103090947/http://nrchapman.com/pacman/
