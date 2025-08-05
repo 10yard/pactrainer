@@ -1,11 +1,15 @@
 # Pattern Trainer Plugin for Pac-Man #
 
-The Pac-Man Trainer is an aid to learning the common patterns for completing boards.  
+The Pac-Man Trainer will help you to improve your Pac-Man skills.  It is an aid to 
+learning the common patterns for completing boards.  
 You follow an on-screen path through each board.  For the pattern to hold,  you must
 stay on track and turn corners quickly - steering ahead of each turn.
 
-The trainer can help you to reach the 9th Key (at level 21) from which point all of
-the boards play the same until you reach the infamous split-screen at level 256.
+There are different pattern sets to help you get to achieve your goals.  You may want
+to reach the 9th Key at level 21 from which point all of the remaining boards play the
+same.  You may want to complete the game by reaching the infamous split-screen at 
+level 256.  You may want to achieve a "Perfect Pac-Man" score of 3,333,360 by eating 
+every pellet, every bonus and every ghost possible.  You may just want a new PB!
 
 ![Pac-Man Trainer Plugin Demo](demo.gif)
 
