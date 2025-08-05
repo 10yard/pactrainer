@@ -54,7 +54,7 @@
 -----------------------------------------------------------------------------------------
 local exports = {
 	name = "pactrainer",
-	version = "0.1i",
+	version = "0.1j",
 	description = "Pac-Man Pattern Trainer",
 	license = "GNU GPLv3",
 	author = { name = "Jon Wilson (10yard)" } }
@@ -77,6 +77,7 @@ function pactrainer.startplugin()
 	
 	function get_next(table, id)
 		local found = false
+		nextid = "pacstrats" -- default
 		for k, v in ipairs(table) do
 			if found then
 				nextid = v
@@ -84,7 +85,7 @@ function pactrainer.startplugin()
 			end
 			if v == id then found = true end
 		end		
-		return nextid or "pacstrats"
+		return nextid
 	end
 	
 	function pactrainer_initialize()
