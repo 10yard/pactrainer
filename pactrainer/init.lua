@@ -54,7 +54,7 @@
 -----------------------------------------------------------------------------------------
 local exports = {
 	name = "pactrainer",
-	version = "0.1j",
+	version = "0.1k",
 	description = "Pac-Man Pattern Trainer",
 	license = "GNU GPLv3",
 	author = { name = "Jon Wilson (10yard)" } }
@@ -70,10 +70,13 @@ function pactrainer.startplugin()
 	local patx, paty, pacx, pacy, oldpacx, oldpacy, lagx, lagy
 	local mode, level, patid, patgroup, state, pills, oldstate, folder, first
 	local seq, switch = 0, 0
-	local pattern, group = {}, {}
+	local pattern, group, info = {}, {}, {}
 	local loaded, valid, failed, adjusted, lagging, ignore, freestyle, perfect = false, false, false, false, false, false, false, false
 	local lag_pixels = LAG_PIXELS_DEFAULT
 	
+	info["pacstrats"] = "Uses only 3 patterns to clear boards 1 through 255."
+	info["killerclown"] = "Uses 5 similar patterns that should be easier to learn."
+	info["perfect_nrc"] = "An advanced pattern set for attaining a perfect score."
 	
 	function get_next(table, id)
 		local found = false
@@ -152,15 +155,18 @@ function pactrainer.startplugin()
 	
 	function pattern_toggle()
 		-- Check for pattern change when P2 key press is detected
-		if mode == 1 and state == 0 then
-			mac:popmessage("Using '"..string.upper(folder).."' patterns.  Push 'P2' to toggle.")		
+		if mode == 1 then
+			if info[folder] then
+				mac:popmessage(string.upper(folder).." patterns:\n"..info[folder].."\n(Push P2 to toggle)")		
+			else
+				mac:popmessage(string.upper(folder).." patterns\n(Push P2 to toggle)")		
+			end
 		end
-		
 		if scr:frame_number() > switch + 30 and string.sub(integer_to_binary(mem:read_u8(0x5040)), 2, 2) == "0" then
 			folder = get_next(SETS, folder)
 			pactrainer_patterns()
 			if not(mode == 1 and state == 0) then
-				mac:popmessage("Switched to '"..string.upper(folder).."' patterns.  Active from next level start.")
+				mac:popmessage(string.upper(folder).." patterns will be active at next level start.")
 			end
 			switch = scr:frame_number()
 			
