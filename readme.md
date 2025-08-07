@@ -1,9 +1,14 @@
 # Pattern Trainer Plugin for Pac-Man #
 
-The Pac-Man Trainer will help you to improve your Pac-Man skills.  It is an aid to 
-learning the common patterns for completing boards.  
+Do you want to get good at the original arcade Pac-Man? The solution is here! 
+
+The Pac-Man Trainer will help you to improve your Pac-Man skills.  It's an interactive
+aid to learning the common patterns for completing boards - or helping you complete the
+entire game.  
 You follow an on-screen path through each board.  For the pattern to hold,  you must
 stay on track and turn corners quickly - steering ahead of each turn.
+
+Here's a video review by GenXGrownup: https://www.youtube.com/watch?v=YXgzogIQPOc
 
 There are different pattern sets to help you get to achieve your goals.  You may want
 to reach the 9th Key at level 21 from which point all of the remaining boards play the
@@ -81,6 +86,7 @@ More information about Killerclown's patterns is to be found at:
 
 
 Tested with latest MAME version
+
 Compatible with all MAME versions from at least 0.196
 
   
@@ -111,6 +117,9 @@ Killerclown for his Pac-Man patterns and strategy guide at:
 
 NR Chapman for his perfect Pac-Man guide at:
 - https://web.archive.org/web/20061103090947/http://nrchapman.com/pacman/
+
+Mr2Nut123 for his inspiration to create this trainer.  Good luck with your journey to the Pac-Man split-screen.
+- https://www.twitch.tv/mr2nut123
 
 
 ## Feedback
