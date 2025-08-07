@@ -80,8 +80,8 @@ More information about Killerclown's patterns is to be found at:
 ```mame pacman -plugin pactrainer```
 
 
-Tested with latest MAME version 0.256
-Compatible with all MAME versions from 0.226
+Tested with latest MAME version
+Compatible with all MAME versions from at least 0.196
 
   
 ## Installing and running
@@ -111,11 +111,6 @@ Killerclown for his Pac-Man patterns and strategy guide at:
 
 NR Chapman for his perfect Pac-Man guide at:
 - https://web.archive.org/web/20061103090947/http://nrchapman.com/pacman/
-
-
-## What's next
-
-- Finish work on the perfect Pac-Man pattern set
 
 
 ## Feedback

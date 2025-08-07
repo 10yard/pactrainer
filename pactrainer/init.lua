@@ -49,12 +49,12 @@
 --Minimum start up arguments:
 --    mame pacman -plugin pactrainer
 --
---Compatible with all MAME versions from 0.226 upwards.
+--Compatible with all MAME versions from at least 0.196
 --Works with "pacman" and "puckman" roms only.
 -----------------------------------------------------------------------------------------
 local exports = {
 	name = "pactrainer",
-	version = "0.1k",
+	version = "0.1m",
 	description = "Pac-Man Pattern Trainer",
 	license = "GNU GPLv3",
 	author = { name = "Jon Wilson (10yard)" } }
@@ -92,7 +92,11 @@ function pactrainer.startplugin()
 	end
 	
 	function pactrainer_initialize()
-		mac = manager.machine
+		if type(manager.machine) == "userdata" then
+			mac = manager.machine
+		else
+			mac = manager:machine()
+		end	
 		if mac then
 			if emu.romname() == "pacman" or emu.romname() == "puckman" then
 				cpu = mac.devices[":maincpu"]
