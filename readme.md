@@ -5,8 +5,9 @@ Do you want to get good at the original arcade Pac-Man? The solution is here!
 The Pac-Man Trainer will help you to improve your Pac-Man skills.  It's an interactive
 aid to learning the common patterns for completing boards - or helping you complete the
 entire game.  
-You follow an on-screen path through each board.  For the pattern to hold,  you must
-stay on track and turn corners quickly - steering ahead of each turn.
+You follow an on-screen path through each board.  
+To master the patterns, you must stay on track, with frame perfect accuracy, anticipating 
+the turns and steering early.
 
 Here's a video review by GenXGrownup: https://www.youtube.com/watch?v=YXgzogIQPOc
 
@@ -99,6 +100,14 @@ The Plugin is run by adding `-plugin pactrainer` to your MAME arguments e.g.
 ```mame pacman -plugin pactrainer```  
 
 Works with "pacman" and "puckman" roms only.
+
+
+## Troubleshooting
+
+#### How do I get the plugin to work with Launchbox?
+
+ - Edit your PacMan game. Under Emulation, check the box to use custom command-line parameters. in the space below, add ```-plugin pactrainer```.
+
 
 
 ## Thanks to
