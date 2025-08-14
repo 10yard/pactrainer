@@ -9,7 +9,7 @@ You follow an on-screen path through each board.
 To master the patterns, you must stay on track, with frame perfect accuracy, anticipating 
 the turns and steering early.
 
-Here's a video review by GenXGrownup: https://www.youtube.com/watch?v=YXgzogIQPOc
+Here's a video review by GenXGrownUp: https://www.youtube.com/watch?v=YXgzogIQPOc
 
 There are different pattern sets to help you get to achieve your goals.  You may want
 to reach the 9th Key at level 21 from which point all of the remaining boards play the
@@ -106,7 +106,7 @@ Works with "pacman" and "puckman" roms only.
 
 #### How do I get the plugin to work with Launchbox?
 
- - Edit your PacMan game. Under Emulation, check the box to use custom command-line parameters. in the space below, add ```-plugin pactrainer```.
+ - Edit your PacMan game. Under Emulation, check the box to use custom command-line parameters. in the space below, add ```-plugin pactrainer```
 
 
 

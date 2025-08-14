@@ -54,7 +54,7 @@
 -----------------------------------------------------------------------------------------
 local exports = {
 	name = "pactrainer",
-	version = "0.1m",
+	version = "0.1n",
 	description = "Pac-Man Pattern Trainer",
 	license = "GNU GPLv3",
 	author = { name = "Jon Wilson (10yard)" } }
@@ -67,6 +67,7 @@ function pactrainer.startplugin()
 	local LAG_PIXELS_DEFAULT = 5
 
 	local mac, cpu, mem, scr
+	local plugin_path
 	local patx, paty, pacx, pacy, oldpacx, oldpacy, lagx, lagy
 	local mode, level, patid, patgroup, state, pills, oldstate, folder, first
 	local seq, switch = 0, 0
@@ -101,7 +102,8 @@ function pactrainer.startplugin()
 			if emu.romname() == "pacman" or emu.romname() == "puckman" then
 				cpu = mac.devices[":maincpu"]
 				mem = cpu.spaces["program"]
-				scr = mac.screens[":screen"]								
+				scr = mac.screens[":screen"]
+				plugin_path = manager.plugins["pactrainer"].directory
 			else
 				print("The Pac-Man trainer works only with 'pacman' and 'puckman' roms.")
 			end
@@ -113,7 +115,7 @@ function pactrainer.startplugin()
 				
 		-- look for the active pattern folder
 		if not folder then
-			file = io.open("plugins/pactrainer/patterns/active.dat", "r")
+			file = io.open(plugin_path.."/patterns/active.dat", "r")
 			if file then
 				folder = file:read("*all")
 				file:close()
@@ -130,7 +132,7 @@ function pactrainer.startplugin()
 		group = {}
 		for l=1, 256 do
 			for g=1, 21 do
-				file = io.open("plugins/pactrainer/patterns/"..folder.."/"..tostring(l).."_"..tostring(g)..".dat", "r")
+				file = io.open(plugin_path.."/patterns/"..folder.."/"..tostring(l).."_"..tostring(g)..".dat", "r")
 				if file then
 					valid = true
 					-- store the starting level and group associated with the level
@@ -175,7 +177,7 @@ function pactrainer.startplugin()
 			switch = scr:frame_number()
 			
 			-- save as default
-			file = io.open("plugins/pactrainer/patterns/active.dat", "w")
+			file = io.open(plugin_path.."/patterns/active.dat", "w")
 			if file then
 				file:write(folder)
 				file:close()
