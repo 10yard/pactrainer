@@ -95,15 +95,19 @@ function pactrainer.startplugin()
 	function pactrainer_initialize()
 		if type(manager.machine) == "userdata" then
 			mac = manager.machine
+			plugin_path = manager.plugins["pactrainer"].directory
 		else
 			mac = manager:machine()
+			plugin_path = manager:options().entries["pluginspath"]:value().."/pactrainer"
 		end	
 		if mac then
 			if emu.romname() == "pacman" or emu.romname() == "puckman" then
 				cpu = mac.devices[":maincpu"]
 				mem = cpu.spaces["program"]
 				scr = mac.screens[":screen"]
-				plugin_path = manager.plugins["pactrainer"].directory
+				if not plugin_path then
+					plugin_path = "plugins/pactrainer"
+				end
 			else
 				print("The Pac-Man trainer works only with 'pacman' and 'puckman' roms.")
 			end
