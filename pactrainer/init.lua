@@ -54,7 +54,7 @@
 -----------------------------------------------------------------------------------------
 local exports = {
 	name = "pactrainer",
-	version = "0.1p",
+	version = "0.1q",
 	description = "Pac-Man Pattern Trainer",
 	license = "GNU GPLv3",
 	author = { name = "Jon Wilson (10yard)" } }
@@ -108,8 +108,9 @@ function pactrainer.startplugin()
 				if not plugin_path then
 					plugin_path = "plugins/pactrainer"
 				end
-			else
-				print("The Pac-Man trainer works only with 'pacman' and 'puckman' roms.")
+			--Suppress the error print as we may enable the plugin universally
+			--else
+			--	print("The Pac-Man trainer works only with 'pacman' and 'puckman' roms.")
 			end
 		end
 	end

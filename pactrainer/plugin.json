@@ -2,7 +2,7 @@
 "plugin": {
 "name": "pactrainer",
 "description": "Pac-Man Pattern Trainer",
-"version": "0.1p",
+"version": "0.1q",
 "author": "Jon Wilson (10yard)",
 "type": "plugin",
 "start": "false"
