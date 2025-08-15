@@ -107,8 +107,20 @@ Works with "pacman" and "puckman" roms only.
 #### How do I get the plugin to work with Launchbox?
 
  - Edit your PacMan game. Under Emulation, check the box to use custom command-line parameters. in the space below, add ```-plugin pactrainer```
+ 
+ 
+#### How do I get the plugin to work with RetroPie?
 
-
+ - In the RetroPie Setup menu, under Manage Packages,  under Experimental Packages, Install MAME via binary.  This is a more recent MAME which supports plugins.
+ - Copy the pactrainer folder into /opt/retropie/emulators/mame/plugins
+ - Obviously,  copy your pacman.zip into the new roms folder
+ - Edit the plugin.ini file which can be found at /opt/retropie/configs/mame/plugin.ini to include an extra line, as below.  This enables the pactrainer plugin.
+ 
+```
+hiscore 1
+pactrainer 1
+```
+ 
 
 ## Thanks to
 
